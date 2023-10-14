@@ -1,31 +1,31 @@
 :root {
-  --text-color: #000;
-  --inverted-text-color: #fff;
-  --background-color: #f7f7f7;
-  --secondary-background-color: #eee;
-  --primary-color: #000;
+  --text-color: #4c4f69;
+  --inverted-text-color: #dce0e8;
+  --background-color: #e6e9ef;
+  --secondary-background-color: #eff1f5;
+  --primary-color: #4c4f69;
 
-  --logo-color: #bd271d;
-  --logo-hover-color: var(--text-color);
+  --logo-color: #b4befe;
+  --logo-hover-color: b4befe;
 
-  --link-color: #850000;
-  --link-highlight-color: #ffdcda;
+  --link-color: #9ca0b0;
+  --link-highlight-color: #7287fd;
 
   /* These should match the highlighted theme. */
-  --pre-text-color: #f8f8f2;
-  --pre-background-color: #282a36;
+  --pre-text-color: #cdd6f4;
+  --pre-background-color: #181825;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: #fff;
-    --inverted-text-color: #000;
-    --background-color: #222;
-    --secondary-background-color: #333;
-    --primary-color: #fff;
-    --logo-hover-color: #333;
+    --text-color: #cdd6f4;
+    --inverted-text-color: #11111b;
+    --background-color: #181825;
+    --secondary-background-color: #1e1e2e;
+    --primary-color: #cdd6f4;
+    --logo-hover-color: #b4befe;
 
-    --link-color: #fcc;
-    --link-highlight-color: #933;
+    --link-color: #cdd6f4;
+    --link-highlight-color: #f38ba8;
   }
 }

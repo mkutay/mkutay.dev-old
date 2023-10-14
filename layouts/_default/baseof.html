@@ -3,7 +3,7 @@
   <head>
     {{ $title := cond (isset .Params "title") .Params.Title .Site.Title }}
     {{ $description := cond (isset .Params "description") .Params.Description .Site.Params.SiteDescription }}
-    {{ $logo := resources.Get "images/evanhahnlogo.png" }}
+    {{ $logo := resources.Get "images/kutaypic.png" }}
 
     <!-- Order matters here. -->
 
@@ -23,7 +23,6 @@
     <!-- Nothing else matters until the <head> is all done, so we group <link>s
          and <meta>s together so they (hopefully) compress better. -->
     <link rel="canonical" href="{{ .Permalink }}">
-    <link rel="alternate" type="application/rss+xml" href="{{ ref . (dict "path" "posts" "outputFormat" "rss") }}" title="{{ .Site.Title }}" />
 
     <meta name="description" content="{{ $description }}" />
     <meta property="og:image" content="{{ $logo.Permalink }}" />
@@ -48,26 +47,7 @@
 
     {{ block "footer" . }}
       <footer>
-        <a class="logo" href="{{ relref . "/" }}">{{ partial "logo-image" . }}</a>
-
-        <ul>
-          <li><a href="{{ relref . "/pages/about" }}">About me</a></li>
-          <li><a href="{{ relref . "/pages/contact" }}">Contact</a></li>
-          <li><a href="{{ relref . "/pages/projects" }}">Projects</a></li>
-          <li><a href="{{ relref . "/pages/guides" }}">Guides</a></li>
-          <li><a href="{{ relref . "/posts" }}">Blog</a></li>
-        </ul>
-
-        <ul>
-          <li><a href="{{ ref . (dict "path" "posts" "outputFormat" "rss") }}">RSS</a>
-          <li><a href="https://buttondown.email/evanhahn" target="_blank" rel="noopener noreferrer">Newsletter</a></li>
-          <li><a href="https://bigshoulders.city/@EvanHahn" target="_blank" rel="noopener noreferrer">Mastodon</a></li>
-        </ul>
-
-        <p>
-          Unless noted otherwise, content is licensed under the <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noreferrer noopener">Creative Commons Attribution-NonCommercial License</a> and code under the <a href="https://unlicense.org/" target="_blank" rel="noreferrer noopener">Unlicense</a>.
-          The logo was created by <a href="http://luluspice.com/" target="_blank" rel="noreferrer noopener">Lulu Tang</a>.
-        </p>
+          <a href="{{ relref . "/" }}">Home</a>
       </footer>
     {{ end }}
   </body>

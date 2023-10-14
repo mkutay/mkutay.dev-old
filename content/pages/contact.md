@@ -1,16 +1,12 @@
 ---
-title: Contact Evan Hahn
-description: me@evanhahn.com and more.
+title: Contact Mehmet Kutay Bozkurt
+description: hello@mkutay.dev and more.
 url: /contact
 ---
 
-You probably want to [email me at me@evanhahn.com](mailto:me@evanhahn.com), but you can also find me elsewhere online:
+You probably want to email me at [hello@mkutay.dev](mailto:hello@mkutay.dev), but you can also find me elsewhere online:
 
-- [Fediverse (Mastodon)](https://bigshoulders.city/@EvanHahn)
-- [GitHub](https://github.com/EvanHahn)
-- [GitLab](https://gitlab.com/EvanHahn)
-- [Lobsters](https://lobste.rs/u/EvanHahn)
-- [SourceHut](https://sr.ht/~evanhahn/)
-- [StackOverflow](https://stackoverflow.com/users/804100/evan-hahn)
-
-You can also grab my [PGP key](https://evanhahn.com/tape/publickey.asc.txt).
+- [Fediverse (Mastodon)](https://social.vivaldi.net/@kutay)
+- [GitHub](https://github.com/mkutay)
+- [LinkedIn](https://www.linkedin.com/in/mehmet-kutay-bozkurt-6837b7241/)
+- [Instagram](https://www.instagram.com/mkutayboz/)

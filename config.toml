@@ -1,15 +1,15 @@
-title = 'Evan Hahn (dot com)'
-baseURL = 'https://evanhahn.com/'
-languageCode = 'en-us'
+title = 'Mehmet Kutay Bozkurt'
+baseURL = 'https://mkutay.dev'
+languageCode = 'en-uk'
 disableKinds = ['taxonomy', 'term']
 enableRobotsTXT = true
 copyright = 'Creative Commons Attribution-NonCommercial 4.0 for content, Unlicense for code.'
 rssLimit = 10
 
 [params]
-  Author = 'Evan Hahn'
-  AuthorEmail = 'me@evanhahn.com'
-  SiteDescription = "I'm Evan Hahn, a programmer."
+  Author = 'Mehmet Kutay Bozkurt'
+  AuthorEmail = 'hello@mkutay.dev'
+  SiteDescription = "I'm Mehmet Kutay Bozkurt, a human."
 
 [markup]
   [markup.highlight]
