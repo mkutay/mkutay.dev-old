@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+  <head>
+    {{ $title := cond (isset .Params "title") .Params.Title .Site.Title }}
+    {{ $description := cond (isset .Params "description") .Params.Description .Site.Params.SiteDescription }}
+    {{ $logo := resources.Get "images/evanhahnlogo.png" }}
+
+    <!-- Order matters here. -->
+
+    <!-- According to MDN, "<meta> elements which declare a character encoding
+         must be located entirely within the first 1024 bytes of the document." -->
+    <meta charset="utf-8" />
+
+    <!-- Set the page title so something can show up in the UI ASAP. -->
+    <title>{{ $title }}</title>
+
+    <!-- Start loading CSS and favicons next. -->
+    {{ $style := resources.Get "sass/main.scss" | toCSS | minify | fingerprint }}
+    {{ $favicon := $logo.Resize "32x32" }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
+    <link rel="icon" href="{{ $favicon.Permalink }}" type="image/png" />
+
+    <!-- Nothing else matters until the <head> is all done, so we group <link>s
+         and <meta>s together so they (hopefully) compress better. -->
+    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="alternate" type="application/rss+xml" href="{{ ref . (dict "path" "posts" "outputFormat" "rss") }}" title="{{ .Site.Title }}" />
+
+    <meta name="description" content="{{ $description }}" />
+    <meta property="og:image" content="{{ $logo.Permalink }}" />
+    <meta property="og:title" content="{{ $title }}" />
+    <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+    <meta property="og:url" content="{{ .Permalink }}" />
+    <meta property="og:description" content="{{ $description }}" />
+    {{ if .IsPage }}
+      {{ $iso8601 := "2006-01-02T15:04:05-07:00" }}
+      {{ with .PublishDate }}
+        <meta property="article:published_time" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }} />
+      {{ end }}
+    {{ end }}
+    <meta name="twitter:title" content="{{ $title }}" />
+    <meta name="twitter:description" content="{{ $description }}" />
+    <meta name="twitter:card" content="summary" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  </head>
+  <body>
+    {{ block "main" . }}{{ end }}
+
+    {{ block "footer" . }}
+      <footer>
+        <a class="logo" href="{{ relref . "/" }}">{{ partial "logo-image" . }}</a>
+
+        <ul>
+          <li><a href="{{ relref . "/pages/about" }}">About me</a></li>
+          <li><a href="{{ relref . "/pages/contact" }}">Contact</a></li>
+          <li><a href="{{ relref . "/pages/projects" }}">Projects</a></li>
+          <li><a href="{{ relref . "/pages/guides" }}">Guides</a></li>
+          <li><a href="{{ relref . "/posts" }}">Blog</a></li>
+        </ul>
+
+        <ul>
+          <li><a href="{{ ref . (dict "path" "posts" "outputFormat" "rss") }}">RSS</a>
+          <li><a href="https://buttondown.email/evanhahn" target="_blank" rel="noopener noreferrer">Newsletter</a></li>
+          <li><a href="https://bigshoulders.city/@EvanHahn" target="_blank" rel="noopener noreferrer">Mastodon</a></li>
+        </ul>
+
+        <p>
+          Unless noted otherwise, content is licensed under the <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noreferrer noopener">Creative Commons Attribution-NonCommercial License</a> and code under the <a href="https://unlicense.org/" target="_blank" rel="noreferrer noopener">Unlicense</a>.
+          The logo was created by <a href="http://luluspice.com/" target="_blank" rel="noreferrer noopener">Lulu Tang</a>.
+        </p>
+      </footer>
+    {{ end }}
+  </body>
+</html>

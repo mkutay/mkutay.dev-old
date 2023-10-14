@@ -1,0 +1,31 @@
+:root {
+  --text-color: #000;
+  --inverted-text-color: #fff;
+  --background-color: #f7f7f7;
+  --secondary-background-color: #eee;
+  --primary-color: #000;
+
+  --logo-color: #bd271d;
+  --logo-hover-color: var(--text-color);
+
+  --link-color: #850000;
+  --link-highlight-color: #ffdcda;
+
+  /* These should match the highlighted theme. */
+  --pre-text-color: #f8f8f2;
+  --pre-background-color: #282a36;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #fff;
+    --inverted-text-color: #000;
+    --background-color: #222;
+    --secondary-background-color: #333;
+    --primary-color: #fff;
+    --logo-hover-color: #333;
+
+    --link-color: #fcc;
+    --link-highlight-color: #933;
+  }
+}

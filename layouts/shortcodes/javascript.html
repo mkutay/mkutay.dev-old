@@ -1,0 +1,2 @@
+{{- $script := resources.Get (index .Params 0) | js.Build (dict "target" "es2016" "minify" true) -}}
+<script src="{{ $script.RelPermalink }}" type="module"></script>

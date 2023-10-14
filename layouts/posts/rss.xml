@@ -1,0 +1,39 @@
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    {{ with .Site.Copyright }}<copyright>{{ . }}</copyright>{{ end }}
+    <description>{{ .Params.Description }}</description>
+    {{ with .Site.LanguageCode }}<language>{{.}}</language>{{end}}
+    {{ if not .Date.IsZero }}<lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
+    <link>{{ .Permalink }}</link>
+    <managingEditor>{{ .Site.Params.AuthorEmail }}</managingEditor>
+    <title>{{ .Title }}</title>
+    <webMaster>{{ .Site.Params.AuthorEmail }}</webMaster>
+
+    {{- with .OutputFormats.Get "RSS" -}}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{- end -}}
+
+    {{ $pages := .Pages -}}
+    {{- $limit := .Site.Config.Services.RSS.Limit -}}
+    {{- if ge $limit 1 -}}
+      {{- $pages = $pages | first $limit -}}
+    {{- end -}}
+
+    {{ range $pages }}
+      {{- if .Draft -}}
+        {{- continue -}}
+      {{- end -}}
+
+      <item>
+        <title>{{ .Title }}</title>
+        <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+        <author>{{ .Site.Params.AuthorEmail }}</author>
+        <guid>{{ .Permalink }}</guid>
+        <link>{{ .Permalink }}</link>
+        <description>{{ .Content | html }}</description>
+      </item>
+    {{ end }}
+  </channel>
+</rss>
+

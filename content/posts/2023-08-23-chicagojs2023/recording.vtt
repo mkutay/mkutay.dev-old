@@ -1,0 +1,616 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.000
+Hello! This is "JavaScript and the farmer emoji", a presentation I gave yesterday, August 22nd, 2023.
+
+00:00:09.000 --> 00:00:12.000
+This is a recorded version that I'm doing later.
+
+00:00:12.000 --> 00:00:14.480
+Hopefully it can be useful to you.
+
+00:00:14.480 --> 00:00:15.920
+So my name is Evan Hahn.
+
+00:00:15.920 --> 00:00:18.580
+I'm a computer programmer here in Chicago.
+
+00:00:18.580 --> 00:00:23.660
+You can find the slides, a text version of this talk, my contact information and some
+
+00:00:23.660 --> 00:00:29.720
+other stuff at evanhahn.com/chicagojs2023.
+
+00:00:29.720 --> 00:00:33.240
+So we've probably all worked with strings before in JavaScript.
+
+00:00:33.240 --> 00:00:34.840
+I certainly have.
+
+00:00:34.840 --> 00:00:37.720
+I've often wanted to know the length of a string.
+
+00:00:37.720 --> 00:00:39.360
+This is the string "hi".
+
+00:00:39.360 --> 00:00:41.360
+What is its length?
+
+00:00:41.360 --> 00:00:42.440
+2.
+
+00:00:42.440 --> 00:00:44.520
+Here is the farmer emoji.
+
+00:00:44.520 --> 00:00:47.560
+Think for a moment about what its length probably should be.
+
+00:00:47.560 --> 00:00:50.760
+If you're like me, you think that the answer should be 1.
+
+00:00:50.760 --> 00:00:55.360
+When I gave this presentation yesterday, I heard people say 2 and 5 and 3, but
+
+00:00:55.360 --> 00:00:56.960
+the answer is none of those.
+
+00:00:56.960 --> 00:00:59.280
+It is <i>7</i>.
+
+00:00:59.280 --> 00:01:00.880
+What the heck is going on here?
+
+00:01:00.880 --> 00:01:01.880
+This is really confusing.
+
+00:01:01.880 --> 00:01:02.880
+Uh, whaa??
+
+00:01:02.880 --> 00:01:06.400
+Yeah, this doesn't make any sense.
+
+00:01:06.400 --> 00:01:10.460
+The real question I'm asking is what does <i>length</i> do?
+
+00:01:10.460 --> 00:01:12.380
+Because it doesn't do what I think it does.
+
+00:01:12.380 --> 00:01:17.800
+If it did what I thought it does, it would return 1, but it returns 7.
+
+00:01:17.800 --> 00:01:19.560
+Why is that?
+
+00:01:19.560 --> 00:01:25.240
+To answer this question, we're going to take a look at three terms from the Unicode glossary.
+
+00:01:25.240 --> 00:01:29.320
+And the first is the extended grapheme cluster.
+
+00:01:29.320 --> 00:01:34.360
+An extended grapheme cluster is "the text between extended grapheme cluster boundaries as specified
+
+00:01:34.360 --> 00:01:41.780
+by Unicode Standard Annex #29, 'Unicode Text Segmentation', abbreviated as EGC."
+
+00:01:41.780 --> 00:01:43.200
+This doesn't mean anything.
+
+00:01:43.200 --> 00:01:45.520
+This is nonsense words.
+
+00:01:45.520 --> 00:01:51.080
+Let me show you a little collage of what extended grapheme clusters actually are.
+
+00:01:51.080 --> 00:01:52.600
+Here you go.
+
+00:01:52.600 --> 00:01:57.360
+As you can see, there are a bunch of different things on the screen right now, and each one
+
+00:01:57.360 --> 00:01:59.360
+is an extended grapheme cluster.
+
+00:01:59.360 --> 00:02:06.860
+So the capital letter E and the ñ and the farmer emoji and the whale emoji and the
+
+00:02:06.860 --> 00:02:12.780
+dollar sign and the Euro symbol and the percent sign and a number 8, all of these are
+
+00:02:12.780 --> 00:02:14.760
+extended grapheme clusters.
+
+00:02:14.760 --> 00:02:19.680
+These are probably what you and I would call a "character".
+
+00:02:19.680 --> 00:02:22.440
+So what does <i>length</i> count?
+
+00:02:22.440 --> 00:02:24.040
+Does it count extended grapheme clusters?
+
+00:02:24.040 --> 00:02:28.160
+Well, there's 1 extended grapheme cluster in the farmer emoji.
+
+00:02:28.160 --> 00:02:33.120
+And so if it did, the length would be 1, but the length is 7.
+
+00:02:33.120 --> 00:02:36.160
+So it doesn't count grapheme clusters.
+
+00:02:36.160 --> 00:02:40.600
+I'll pause for questions here in the real presentation, but because this is a recording,
+
+00:02:40.600 --> 00:02:44.800
+feel free to send me your questions anytime.
+
+00:02:44.800 --> 00:02:48.940
+The next term we're going to learn is scalar values.
+
+00:02:48.940 --> 00:02:54.080
+So back to the glossary, it is, "Any Unicode code point except high surrogate and
+
+00:02:54.080 --> 00:02:56.000
+low surrogate code points.
+
+00:02:56.000 --> 00:03:03.120
+In other words, the ranges of integers zero to D7FF16 to E00016 to 10FFFF16 inclusive".
+
+00:03:03.120 --> 00:03:06.040
+Again, this is a bunch of nonsense.
+
+00:03:06.040 --> 00:03:07.520
+What does this really mean?
+
+00:03:07.520 --> 00:03:09.420
+A scalar value is just a number.
+
+00:03:09.420 --> 00:03:12.820
+It's an integer between 0 and about 1.1 million.
+
+00:03:12.820 --> 00:03:17.600
+Many of them are unused; reserved for future use, for example.
+
+00:03:17.600 --> 00:03:20.600
+And really, it's just a number.
+
+00:03:20.600 --> 00:03:24.040
+Most extended grapheme clusters contain one scalar.
+
+00:03:24.040 --> 00:03:31.000
+So for example, the capital letter J in English corresponds to scalar value 74.
+
+00:03:31.000 --> 00:03:37.720
+The music note character corresponds to 9836.
+
+00:03:37.720 --> 00:03:42.600
+The cherry blossom emoji corresponds to 127,800.
+
+00:03:42.600 --> 00:03:46.720
+These are just numbers I looked up, I don't have these memorized.
+
+00:03:46.720 --> 00:03:50.420
+By the way, I'm not going to do this the rest of this presentation, but scalars are usually
+
+00:03:50.420 --> 00:03:56.280
+written with a "U+" prefix and the numbers are written in hex, not decimal, but they
+
+00:03:56.280 --> 00:03:57.960
+represent the same thing.
+
+00:03:57.960 --> 00:04:03.240
+So for example, the music note I wrote as 9836, which is the way you would represent
+
+00:04:03.240 --> 00:04:05.480
+it as a decimal number.
+
+00:04:05.480 --> 00:04:12.640
+But the sort of more standard way to do it is "U+266C", which is the same number
+
+00:04:12.640 --> 00:04:14.660
+encoded in hexadecimal.
+
+00:04:14.660 --> 00:04:18.460
+But again, these represent the same value.
+
+00:04:18.460 --> 00:04:21.200
+Some extended grapheme clusters contain many scalars.
+
+00:04:21.200 --> 00:04:26.040
+So all the ones we've seen have had a one-to-one mapping, but for example, the farmer emoji
+
+00:04:26.040 --> 00:04:27.880
+has a one-to-four mapping.
+
+00:04:27.880 --> 00:04:32.480
+So there's a single extended grapheme cluster that is made up of 4 scalars.
+
+00:04:32.480 --> 00:04:40.140
+I'm not going to read these numbers out, but 128,105, 127,998, and so on.
+
+00:04:40.140 --> 00:04:45.760
+So there are 4 scalars that make up this extended grapheme cluster.
+
+00:04:45.760 --> 00:04:48.040
+So back to our original question, what does <i>length</i> count?
+
+00:04:48.040 --> 00:04:53.560
+Well, we know it doesn't count grapheme clusters because if it did, the length would be 1.
+
+00:04:53.560 --> 00:04:54.880
+Does it count scalars?
+
+00:04:54.880 --> 00:04:59.600
+Well, if it did, the length would be 4 and the actual length is 7.
+
+00:04:59.600 --> 00:05:02.200
+So it doesn't count scalars either.
+
+00:05:02.200 --> 00:05:06.520
+Again, send me any questions that you have.
+
+00:05:06.520 --> 00:05:10.420
+The final term we're going to learn is UTF-16.
+
+00:05:10.420 --> 00:05:13.440
+So how do you store these scalars in the computer?
+
+00:05:13.440 --> 00:05:16.600
+You could imagine...you might have heard of UTF-8.
+
+00:05:16.600 --> 00:05:19.640
+You could imagine defining your own way of doing it.
+
+00:05:19.640 --> 00:05:22.520
+Maybe you use a JSON array or something like that.
+
+00:05:22.520 --> 00:05:24.520
+JavaScript uses UTF-16.
+
+00:05:24.520 --> 00:05:31.560
+UTF-16 is a popular character encoding, probably a little less popular than UTF-8 nowadays,
+
+00:05:31.560 --> 00:05:34.360
+but it's still a very popular way to do things.
+
+00:05:34.360 --> 00:05:40.820
+And as far as I understand, was the state of the art at the time that JavaScript was made.
+
+00:05:40.820 --> 00:05:43.960
+So our final reading of the glossary:
+
+00:05:43.960 --> 00:05:51.040
+UTF-16 is: "the Unicode encoding form that assigns each Unicode scalar value in the ranges U+0000..U+D7FF
+
+00:05:51.040 --> 00:05:56.600
+and U+E000..U+FFFF to a single unsigned 16-bit code unit with
+
+00:05:56.600 --> 00:05:59.520
+the same numeric value as the Unicode scalar value,
+
+00:05:59.520 --> 00:06:03.960
+and that assigns each Unicode scalar value in the range U+10000..U+10FFFF to a surrogate
+
+00:06:03.960 --> 00:06:09.280
+pair according to Table 3-5, 'UTF-16 Bit Distribution.'"
+
+00:06:09.280 --> 00:06:12.920
+As you might expect, this is again something from the glossary that doesn't really make
+
+00:06:12.920 --> 00:06:14.800
+a lot of sense to me.
+
+00:06:14.800 --> 00:06:19.580
+UTF-16 takes these scalars and it splits them up into units.
+
+00:06:19.580 --> 00:06:25.040
+Each unit is 16 bits large and it's an unsigned integer, so that means that it can go from
+
+00:06:25.040 --> 00:06:29.700
+0 to about 66,000.
+
+00:06:29.700 --> 00:06:33.120
+Many scalars fit into a 16-bit unit.
+
+00:06:33.120 --> 00:06:38.560
+So for example, capital letter J is represented by scalar value 74.
+
+00:06:38.560 --> 00:06:44.240
+That's not a very big number, so we only need one UTF-16 unit to store that.
+
+00:06:44.240 --> 00:06:48.480
+The music note is represented by scalar value 9836.
+
+00:06:48.480 --> 00:06:53.620
+Again, not too big to fit in a single unit, so we only use one.
+
+00:06:53.620 --> 00:06:58.120
+Some scalars, however, are too big and they get split into two.
+
+00:06:58.120 --> 00:07:03.920
+This is sometimes called a surrogate pair, where each unit by itself doesn't really mean much.
+
+00:07:03.920 --> 00:07:07.600
+Put together, however, they make up a single scalar.
+
+00:07:07.600 --> 00:07:14.760
+So for example, the cherry blossom emoji is represented by scalar value 127,800.
+
+00:07:14.760 --> 00:07:18.640
+And that is too big to fit in a single unit, so it gets split into two.
+
+00:07:18.640 --> 00:07:21.840
+I'm not going to talk about the algorithm that splits these up.
+
+00:07:21.840 --> 00:07:27.300
+It's not simply dividing the number in half, but it's not super complicated and you can look it up.
+
+00:07:27.300 --> 00:07:30.480
+(It's not too scary.)
+
+00:07:30.480 --> 00:07:37.600
+The farmer emoji is made up of 4 scalars, as we've seen, and each of these scalars is
+
+00:07:37.600 --> 00:07:41.300
+put into one unit or two units.
+
+00:07:41.300 --> 00:07:45.420
+So for example, the first scalar is 128,105.
+
+00:07:45.420 --> 00:07:48.440
+That's a big number, it gets split up into two units.
+
+00:07:48.440 --> 00:07:52.040
+The next is 127,998.
+
+00:07:52.040 --> 00:07:56.440
+That is also a big value, it gets split into two units, making our total 4.
+
+00:07:56.440 --> 00:07:59.380
+The next is 8,205.
+
+00:07:59.380 --> 00:08:03.200
+That's not too big, so we only need one unit for that.
+
+00:08:03.200 --> 00:08:07.360
+And then the final scalar is 127,806.
+
+00:08:07.360 --> 00:08:19.880
+Again, a big number that requires two units, and that means that we have a total of 7 UTF-16 units here.
+
+00:08:19.880 --> 00:08:21.840
+So what does <i>length</i> count?
+
+00:08:21.840 --> 00:08:25.360
+It doesn't count extended grapheme clusters, because there's only 1.
+
+00:08:25.360 --> 00:08:33.960
+It doesn't count scalars, because there are 4, but it <i>does</i> count UTF-16 units.
+
+00:08:33.960 --> 00:08:42.820
+And that is why the length of the farmer emoji is 7, because there are 7 UTF-16 code units in there.
+
+00:08:42.820 --> 00:08:45.820
+Now it's time for a little bit of advice from me.
+
+00:08:45.820 --> 00:08:50.200
+There are bugs here, waiting to happen.
+
+00:08:50.200 --> 00:08:52.320
+One example is a character limit.
+
+00:08:52.320 --> 00:08:57.000
+You might have an input where you can type characters, and you can maybe only type up
+
+00:08:57.000 --> 00:08:58.000
+to 100.
+
+00:08:58.000 --> 00:09:02.400
+So you've typed "Hello", space, and now you're about to type a farmer emoji.
+
+00:09:02.400 --> 00:09:09.240
+I think if you do that, the user would expect the number of characters here to be 7.
+
+00:09:09.240 --> 00:09:16.860
+In reality, if you use <i>length</i> naïvely, the length would jump up to 13.
+
+00:09:16.860 --> 00:09:21.540
+It's <i>possible</i> that this is what you intended, but more likely this is going to be confusing
+
+00:09:21.540 --> 00:09:28.000
+to the user, which is why services like Mastodon that have limits have more intelligent ways
+
+00:09:28.000 --> 00:09:33.440
+of computing this beyond just simply calling <i>.length</i> on strings.
+
+00:09:33.440 --> 00:09:35.880
+So this is something to be careful of.
+
+00:09:35.880 --> 00:09:38.000
+Another is syncing with a backend.
+
+00:09:38.000 --> 00:09:43.420
+This is a bit of a contrived example, comparing a JavaScript validation function to a Python
+
+00:09:43.420 --> 00:09:44.420
+validation function.
+
+00:09:44.420 --> 00:09:47.560
+And you could imagine you do some client-side validation, then you send it up
+
+00:09:47.560 --> 00:09:50.240
+to the server, which does its own validation.
+
+00:09:50.240 --> 00:09:55.680
+But because lengths are computed differently in different environments, you might have bugs.
+
+00:09:55.680 --> 00:10:00.240
+So in JavaScript, the length of the farmer emoji is 7, as we've seen.
+
+00:10:00.240 --> 00:10:07.840
+That means that if the limit is 20, the length of 20 units, you could only have two farmer
+
+00:10:07.840 --> 00:10:12.080
+emojis be valid.
+
+00:10:12.080 --> 00:10:17.280
+If you're sending it up to your Python backend, the length of the farmer emoji in Python is
+
+00:10:17.280 --> 00:10:22.840
+confusingly <i>4</i>, which means that you could only have four...or you could have a different
+
+00:10:22.840 --> 00:10:23.840
+number—
+
+00:10:23.840 --> 00:10:27.080
+you could have four farmer emojis in a string.
+
+00:10:27.080 --> 00:10:30.880
+You could also imagine a database that has a different character encoding than JavaScript
+
+00:10:30.880 --> 00:10:35.720
+or a different encoding than Python, and you could run into bugs when dealing with strings
+
+00:10:35.720 --> 00:10:40.960
+in different encodings and having different limits or other kinds of validations.
+
+00:10:40.960 --> 00:10:42.880
+Another is getting a character out of a string.
+
+00:10:42.880 --> 00:10:49.960
+So I've written some code that capitalizes the first letter of a string, and if you are
+
+00:10:49.960 --> 00:10:57.560
+lucky and the first character is not too big, basically, if it's not more than one UTF-16
+
+00:10:57.560 --> 00:11:04.000
+unit, or if it's not more than one scalar value, then you're okay.
+
+00:11:04.000 --> 00:11:10.800
+But there are cases where that isn't the case, like many emoji, and in those situations,
+
+00:11:10.800 --> 00:11:16.440
+you are going to get garbage out when you try to get a character out.
+
+00:11:16.440 --> 00:11:19.800
+Most of JavaScript uses UTF-16 code units.
+
+00:11:19.800 --> 00:11:21.640
+So this is a big list I made.
+
+00:11:21.640 --> 00:11:24.440
+We've seen that <i>length</i> uses UTF-16.
+
+00:11:24.440 --> 00:11:30.680
+<i>indexOf()</i> will give you the index, the UTF-16 index, not a scalar index or an extended grapheme
+
+00:11:30.680 --> 00:11:32.240
+cluster index.
+
+00:11:32.240 --> 00:11:38.160
+<i>slice()</i>: you can slice in the middle of the farmer emoji and have all kinds of problems,
+
+00:11:38.160 --> 00:11:40.000
+and there are various other ways
+
+00:11:40.000 --> 00:11:45.440
+that things can go right and wrong, but know that you're using UTF-16 most of the time
+
+00:11:45.440 --> 00:11:48.480
+you use JavaScript strings.
+
+00:11:48.480 --> 00:11:50.680
+There are a few cases where that isn't true.
+
+00:11:50.680 --> 00:11:57.040
+Iterating, so if you use <i>for (character of string)</i>, or if you use the <i>...</i> splat
+
+00:11:57.040 --> 00:12:01.320
+operator, you'll get scalars out
+
+00:12:01.320 --> 00:12:06.520
+(technically, you'll get the string corresponding thing for the scalar), and you can see here
+
+00:12:06.520 --> 00:12:11.200
+that the farmer emoji is made up of things that kind of look like parts of it.
+
+00:12:11.200 --> 00:12:16.240
+So there's the woman emoji, then there's the skin tone modifier, an invisible character
+
+00:12:16.240 --> 00:12:22.760
+called the "zero width joiner" that I've represented as a square here, and the stalk of rice.
+
+00:12:22.760 --> 00:12:31.520
+And when all of those are put together, the renderer will render the farmer emoji.
+
+00:12:31.520 --> 00:12:36.840
+If you want to get extended grapheme clusters, it's a little bit of a messier story.
+
+00:12:36.840 --> 00:12:41.120
+<i>Intl.Segmenter()</i> is something that you might be able to get away with in some environments.
+
+00:12:41.120 --> 00:12:45.600
+For example, I was using Electron and I could get away with it because it's supported by
+
+00:12:45.600 --> 00:12:52.640
+Chromium, but as of right now, it's not supported by Firefox, and so you may not be able to
+
+00:12:52.640 --> 00:12:53.640
+use it directly.
+
+00:12:53.640 --> 00:12:57.280
+There are some polyfills, my understanding is that those can get quite large, but maybe
+
+00:12:57.280 --> 00:12:58.280
+worth evaluating.
+
+00:12:58.280 --> 00:13:04.560
+You can also evaluate libraries like <i>graphemer</i>, I've also seen, it's called <i>stringz</i>, various
+
+00:13:04.560 --> 00:13:10.000
+libraries that can also do a good job here if you want to deal with extended grapheme clusters.
+
+00:13:10.000 --> 00:13:15.000
+I'll also say that this is not just a JavaScript problem, so I mentioned that in Python, the
+
+00:13:15.000 --> 00:13:21.320
+length of the farmer emoji is 4, which is <i>maybe</i> better, but it's still confusing,
+
+00:13:21.320 --> 00:13:25.900
+and most programming languages I have worked with have various caveats when you're trying
+
+00:13:25.900 --> 00:13:29.760
+to get the length of a string.
+
+00:13:29.760 --> 00:13:36.480
+Maybe they store their stuff in UTF-8, which has its own way of storing scalars.
+
+00:13:36.480 --> 00:13:40.760
+Maybe it does extended grapheme clusters, which is maybe more intuitive, but then it
+
+00:13:40.760 --> 00:13:49.000
+can be a little slow for larger strings because it has to iterate over every single byte in the string.
+
+00:13:49.000 --> 00:13:55.000
+So there are various caveats you need to think about when you're dealing with strings in JavaScript and beyond.
+
+00:13:55.000 --> 00:14:02.000
+So in summary, we learned about extended grapheme clusters, which is probably what you and I would
+
+00:14:02.000 --> 00:14:07.000
+call a character. We learned about scalar values, which are numbers that back these grapheme clusters.
+
+00:14:07.000 --> 00:14:13.000
+And we learned about UTF-16, which is how JavaScript stores these scalars.
+
+00:14:13.000 --> 00:14:19.000
+We learned that most of JavaScript, including <i>length</i>, uses UTF-16 units. And there are probably
+
+00:14:19.000 --> 00:14:22.000
+bugs here to watch out for.
+
+00:14:22.000 --> 00:14:27.000
+Thank you very much for listening/watching. Feel free to reach any
+
+00:14:27.000 --> 00:14:34.000
+time. The slides and more information about this talk are at evanhahn.com/chicagojs2023.

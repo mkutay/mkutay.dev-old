@@ -1,0 +1,18 @@
+{{ define "main" }}
+  <div class="home">
+    <header>
+      {{ partial "logo-image" . }}
+      <h1>{{ .Site.Params.SiteDescription }}</h1>
+    </header>
+
+    <nav>{{ "" -}}
+      <a href="{{ relref . "/pages/about" }}">About me</a>{{ "" -}}
+      <a href="{{ relref . "/pages/contact" }}">Contact</a>{{ "" -}}
+      <a href="{{ relref . "/pages/projects" }}">Projects</a>{{ "" -}}
+      <a href="{{ relref . "/pages/guides" }}">Guides</a>{{ "" -}}
+      <a href="{{ relref . "/posts" }}">Blog</a>{{ "" -}}
+    </nav>
+  </div>
+{{ end }}
+
+{{ define "footer" }}<!-- Empty -->{{ end }}

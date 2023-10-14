@@ -1,0 +1,29 @@
+{{ define "main" }}
+  <main class="content-page">
+    <h1>{{ .Title }}</h1>
+
+    {{ .Content }}
+
+    {{ $previousYear := "" -}}
+    {{ range .Pages -}}
+      {{- if .Draft -}}
+        {{- continue -}}
+      {{- end -}}
+
+      {{ $year := .Date.Format "2006" -}}
+      {{ if ne $year $previousYear -}}
+        {{ if ne $previousYear "" -}}
+          </ul>
+        {{ end -}}
+        <h2>{{ $year }}</h2>
+        <ul class="spaced-list">
+      {{ end -}}
+
+      <li>{{ "" -}}
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ "" -}}
+      </li>
+
+      {{ $previousYear = $year }}
+    {{ end }}
+  </main>
+{{ end }}

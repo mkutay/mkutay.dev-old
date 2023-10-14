@@ -1,0 +1,6 @@
+{{- $postHref := index .Params 0 -}}
+{{- $postUrl := urls.Parse $postHref -}}
+
+<iframe src="{{ $postHref }}/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400" allowfullscreen="allowfullscreen" height="250"></iframe>
+
+<script src="https://{{ $postUrl.Host }}/embed.js" async="async"></script>

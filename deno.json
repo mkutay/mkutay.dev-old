@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "check": "deno check assets/**/*.js assets/**/*.ts"
+  },
+  "compilerOptions": {
+    "lib": ["es2023", "deno.ns", "dom"]
+  }
+}

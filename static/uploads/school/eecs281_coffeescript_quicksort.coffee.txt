@@ -1,0 +1,66 @@
+# Non-destructive quicksort.
+# DOESN'T WORK WITH DUPLICATES. Too lazy.
+# [1, 5, 8, 12].quickSort()
+Array::quickSort = ->
+
+	# Is the array already sorted by nature of its length?
+	return this if @length <= 1
+
+	# Pick a pivot as a random element.
+	# This is probably not the best pivot we could choose.
+	pivot = this[Math.floor(Math.random() * @length)]
+
+	# Set up two pointers.
+	i = 0
+	j = @length - 1
+
+	# Move inward towards the middle.
+	while i isnt j
+
+		# Find an element that's larger than or equal to the pivot.
+		while (this[i] < pivot) and (i isnt j)
+			i++
+
+		# Find an element that's smaller than or equal to the pivot.
+		while (this[j] > pivot) and (i isnt j)
+			j--
+
+		# Switch the two elements.
+		[this[i], this[j]] = [this[j], this[i]]
+
+	# Recurse with the two halves on either side of the pivot.
+	firstHalf = @slice(0, i)
+	secondHalf = @slice(i + 1)
+
+	# Sort the halves.
+	firstHalf = firstHalf.quickSort()
+	secondHalf = secondHalf.quickSort()
+
+	# Concatenate them.
+	return firstHalf.concat(pivot, secondHalf)
+
+########################################################################
+
+# Test setup
+assert = console.assert
+eq = (a, b) ->
+	return false if a.length isnt b.length
+	for num, i in a
+		return false if num != b[i]
+	return true
+
+# Tests
+assert eq([].quickSort(), [])
+assert eq([0].quickSort(), [0])
+assert eq([1].quickSort(), [1])
+assert eq([1, 2].quickSort(), [1, 2])
+assert eq([2, 1].quickSort(), [1, 2])
+assert eq([1, 2, 3].quickSort(), [1, 2, 3])
+assert eq([2, 1, 3].quickSort(), [1, 2, 3])
+assert eq([3, 1, 2].quickSort(), [1, 2, 3])
+assert eq([3, 2, 1].quickSort(), [1, 2, 3])
+assert eq([0, 2, 3].quickSort(), [0, 2, 3])
+assert eq([2, 0, 3].quickSort(), [0, 2, 3])
+assert eq([3, 0, 2].quickSort(), [0, 2, 3])
+assert eq([3, 2, 0].quickSort(), [0, 2, 3])
+assert eq([4,3,9,25,0,-19,55,43].quickSort(), [-19,0,3,4,9,25,43,55])

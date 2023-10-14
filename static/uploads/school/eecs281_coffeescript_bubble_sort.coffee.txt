@@ -1,0 +1,57 @@
+# Do a destructive bubble sort.
+# Call like this:
+# [5, 3, 2, 8].bubbleSort()
+
+Array::bubbleSort = ->
+
+	# We haven't made a swap yet.
+	madeSwap = no
+
+	# Go through the whole array.
+	# Swap if we need to make swaps, and make sure we mark madeSwap.
+	for i in [0..@length]
+
+		# Which values are we comparing?
+		here = this[i]
+		next = this[i + 1]
+
+		# Don't do anything if we're at the last element, though!
+		if next?
+
+			# If we should swap, do the swap and mark that we've done one.
+			if here > next
+				[this[i], this[i + 1]] = [next, here]
+				madeSwap = yes
+
+	# Okay, so we've done a pass.
+	# We should try again if we've made any swaps.
+	@bubbleSort() if madeSwap
+
+	# All done!
+	return this
+
+########################################################################
+
+# Test setup
+assert = console.assert
+eq = (a, b) ->
+	return false if a.length isnt b.length
+	for num, i in a
+		return false if num != b[i]
+	return true
+
+# Tests
+assert eq([].bubbleSort(), [])
+assert eq([0].bubbleSort(), [0])
+assert eq([1].bubbleSort(), [1])
+assert eq([1, 2].bubbleSort(), [1, 2])
+assert eq([2, 1].bubbleSort(), [1, 2])
+assert eq([1, 2, 3].bubbleSort(), [1, 2, 3])
+assert eq([2, 1, 3].bubbleSort(), [1, 2, 3])
+assert eq([3, 1, 2].bubbleSort(), [1, 2, 3])
+assert eq([3, 2, 1].bubbleSort(), [1, 2, 3])
+assert eq([0, 2, 3].bubbleSort(), [0, 2, 3])
+assert eq([2, 0, 3].bubbleSort(), [0, 2, 3])
+assert eq([3, 0, 2].bubbleSort(), [0, 2, 3])
+assert eq([3, 2, 0].bubbleSort(), [0, 2, 3])
+assert eq([4,3,9,25,25,0,-19,55,43].bubbleSort(), [-19,0,3,4,9,25,25,43,55])

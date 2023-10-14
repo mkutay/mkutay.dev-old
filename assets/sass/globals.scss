@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans",
+    sans-serif;
+  font-size: 18pt;
+  color: var(--text-color);
+  background: var(--background-color);
+}
+
+body {
+  line-height: 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+strong {
+  font-weight: 900;
+}
+
+em {
+  font-style: italic;
+}
+
+code,
+pre,
+.mono {
+  font-family: Monaco, "Ubuntu Mono", Inconsolata, Consolas, monospace;
+  letter-spacing: -0.03em;
+}
+
+p > code,
+li > code {
+  background: var(--secondary-background-color);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-color: var(--link-highlight-color);
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: 2px;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  background: var(--link-highlight-color);
+}
+
+a:active {
+  position: relative;
+  top: 1px;
+}
+
+::selection {
+  color: var(--inverted-text-color);
+  background: var(--primary-color);
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  line-height: 1em;
+}
+
+hr {
+  border: 0;
+  border-top: 2px solid var(--primary-color);
+}
+
+small {
+  font-size: 80%;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
+
+input {
+  font-size: inherit;
+}
+
+textarea {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  position: relative;
+  vertical-align: baseline;
+  font-size: 70%;
+}
+
+sup {
+  top: -0.6em;
+}
+
+sub {
+  top: 0.6em;
+}
+
+details summary {
+  display: flex;
+  align-items: first baseline;
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:before {
+    content: "▶";
+    margin-right: 0.5rem;
+    transition: transform ease-out 0.1s;
+  }
+}
+
+details[open] > summary:before {
+  transform: rotate(90deg);
+}
+
+.spaced-list > li {
+  margin-bottom: 1em;
+}
+
+.flex {
+  display: flex;
+}

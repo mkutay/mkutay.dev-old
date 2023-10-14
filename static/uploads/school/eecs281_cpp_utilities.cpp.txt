@@ -1,0 +1,70 @@
+#ifndef EvanHahn_cpp_commonstuff
+#define EvanHahn_cpp_commonstuff
+
+#include <string>
+#include <string.h>
+#include <sstream>
+#include <vector>
+using namespace std;
+
+// are two C strings equal?
+bool streq(const char* a, const char* b) {
+  return (strcmp(a, b) == 0);
+}
+
+// string left trim
+string ltrim(const string s) {
+	string result;
+	uint i;
+	for (i = 0; (i < s.size()) && (s[i] == ' '); i ++);
+	return s.substr(i);
+}
+
+// string right trim
+string rtrim(const string s) {
+	if (s.empty())
+		return "";
+	string result;
+	uint i;
+	for (i = s.size() - 1; (i > 0) && (s[i] == ' '); i --);
+	return s.substr(0, i + 1);
+}
+
+// string trim
+string trim(const string s) {
+	return ltrim(rtrim(s));
+}
+
+// split("hello to the world!", "! ") returns vector of "hello", "to", "the", "world"
+vector<string> split(const string toSplit, const char* separatorString) {
+
+	// declare result vector
+	vector<string> result;
+
+	// are we done real fast?
+	if (toSplit.empty())
+		return result;
+
+	// split it up
+	char* splitter;
+	string toAdd;
+	splitter = strtok((char*) toSplit.c_str(), separatorString);
+	while (splitter != NULL) {
+		toAdd = (string) splitter;
+		result.push_back((string) splitter);
+		splitter = strtok(NULL, separatorString);
+	}
+
+	// done!
+	return result;
+
+}
+
+// convert an int to a string
+string intToString(int s) {
+	stringstream ss;
+	ss << s;
+	return ss.str();
+}
+
+#endif
